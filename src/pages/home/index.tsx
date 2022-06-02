@@ -93,8 +93,8 @@ export default function Home(): ReturnType<Taro.FC> {
     const nowTime = new Date().getTime();
     const entTime =
       new Date(new Date().toLocaleDateString()).getTime() +
-      16 * 60 * 60 * 1000 +
-      19 * 60 * 1000;
+      15 * 60 * 60 * 1000 +
+      20 * 60 * 1000;
 
     function intervalTime(startTime, endTime) {
       var timeDiff = endTime - startTime; //时间差
