@@ -1,31 +1,48 @@
 export default defineAppConfig({
   pages: [
     // 测试
-    "pages/test/index",
-    "pages/test/indexs",
+    "pages/home/index",
+    "pages/login/index",
+    "pages/my/index",
   ],
+  subpackages: [
+    {
+      root: "components",
+      name: "pack1",
+      pages: ["test/index", "test/template"],
+    },
+    {
+      root: "view",
+      name: "pack2",
+      pages: ["test/index"],
+    },
+  ],
+
   tabBar: {
     backgroundColor: "#fff",
     color: "#999",
     borderStyle: "black",
-    selectedColor: "#1296db",
+    selectedColor: "#00d093",
     list: [
+      //TODO 这里的path必须在主包
       {
-        text: "测试",
-        pagePath: "pages/test/index",
-        // iconPath: "./assets/image/task.png",
-        // selectedIconPath: "./assets/image/task-select.png",
+        text: "首页",
+        pagePath: "pages/home/index",
+        iconPath: "./assets/home.png",
+        selectedIconPath: "./assets/select-home.png",
       },
       {
-        text: "测试",
-        pagePath: "pages/test/indexs",
+        text: "我的",
+        pagePath: "pages/my/index",
+        iconPath: "./assets/doctor.png",
+        selectedIconPath: "./assets/select-doctor.png",
       },
     ],
   },
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "任务单",
+    navigationBarTitleText: "吹风小队",
     navigationBarTextStyle: "black",
   },
 });

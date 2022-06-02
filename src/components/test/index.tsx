@@ -3,7 +3,7 @@ import { Component, useRef, useState } from "react";
 import Taro, { useRouter } from "@tarojs/taro";
 import { useDispatch, useSelector } from "react-redux";
 import { View, Button, Image, Text, Picker } from "@tarojs/components";
-import { add } from "../../store/actions";
+import { add, asyncAdd } from "../../store/actions";
 import { StoreStatus, OrderStatus } from "../../store/types/index";
 
 export default function Login(): ReturnType<Taro.FC> {
@@ -17,7 +17,7 @@ export default function Login(): ReturnType<Taro.FC> {
   return (
     <View className="index">
       <View>{order.orderInit}</View>
-      {/* <Button onClick={() => dispatch(add())}>SSSSSSSSSSSSSSSSSS</Button> */}
+      <Button onClick={() => dispatch(asyncAdd(1))}>components-index</Button>
     </View>
   );
 }

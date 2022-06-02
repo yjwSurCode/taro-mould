@@ -9636,7 +9636,7 @@ taro-css-to-react-native@3.4.8:
     css-mediaquery "^0.1.2"
     postcss-value-parser "^3.3.0"
 
-taro-ui@^3.0.0-alpha.10:
+taro-ui@3.0.0-alpha.10:
   version "3.0.0-alpha.10"
   resolved "https://registry.npmmirror.com/taro-ui/-/taro-ui-3.0.0-alpha.10.tgz#c6fb95ddb70d31c5b1e242cdc25fb11d630339a2"
   integrity sha512-sNgMFKv1WrcUvxVrIP5CwzfSAdx5nCGJhb5+4atzK+nJneuX9lKO4hZhlJ4FchrlF68QjM5s5Rb47VAuXVbKsA==

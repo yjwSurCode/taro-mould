@@ -1,8 +1,16 @@
-import { ADD, MINUS, SET } from "../types/index";
+import { ADD, TOKEN, MINUS, SET } from "../types/index";
 
 export const add = (getState, dispatch?) => {
   return {
     type: ADD,
+    payload: getState,
+  };
+};
+
+export const setToken = (getState, dispatch?) => {
+  console.log("1111111111111", getState); // { {},token: "Bearer undefined" }
+  return {
+    type: TOKEN,
     payload: getState,
   };
 };
