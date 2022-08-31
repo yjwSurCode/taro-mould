@@ -1,25 +1,29 @@
 export default defineAppConfig({
   pages: [
     // 测试
+    // "components/guidePage/index",
     "pages/home/index",
     "pages/login/index",
     "pages/my/index",
+    "pages/exhibition-list/index",
   ],
-  subpackages: [
-    {
-      root: "components",
-      name: "pack1",
-      pages: ["test/index", "test/template"],
-    },
-    {
-      root: "view",
-      name: "pack2",
-      pages: ["test/index"],
-    },
-  ],
+  // subpackages: [
+  //   {
+  //     root: "components",
+  //     name: "pack1",
+  //     pages: ["test/index", "test/template"],
+  //   },
+  //   {
+  //     root: "view",
+  //     name: "pack2",
+  //     pages: ["test/index"],
+  //   },
+  // ],
 
+  // 自定义遇到的问题  https://github.com/NervJS/taro/issues/7302
   tabBar: {
-    backgroundColor: "#fff",
+    custom: true,
+    backgroundColor: "#000000",
     color: "#999",
     borderStyle: "black",
     selectedColor: "#00d093",
@@ -28,6 +32,12 @@ export default defineAppConfig({
       {
         text: "首页",
         pagePath: "pages/home/index",
+        iconPath: "./assets/home.png",
+        selectedIconPath: "./assets/select-home.png",
+      },
+      {
+        text: "展示",
+        pagePath: "pages/exhibition-list/index",
         iconPath: "./assets/home.png",
         selectedIconPath: "./assets/select-home.png",
       },

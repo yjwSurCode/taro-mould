@@ -41,9 +41,6 @@ url: "/pages/setting/index",
 Taro.switchTab({
 url: "/pages/task/index",
 });
-Taro.switchTab({
-url: "/pages/task/index",
-});
 
 <!-- 重定向  不自带返回-->
 
@@ -64,6 +61,45 @@ pageTitle: routerProps,
 },
 () => console.log("setState 完成", this.state)
 );
+}
+
+<!-- 页面间事件通信通道 -->
+
+EventChannel
+emit once off
+
+## 导航栏
+
+https://docs.taro.zone/docs/apis/ui/navigation-bar/showNavigationBarLoading
+
+https://docs.taro.zone/docs/page-config
+
+navigationStyle: "custom", 设置之后后面的参数不生效
+
+## 下面的 tabbar
+
+interface TabBar {
+/** tab 上的文字默认颜色 \*/
+color?: string
+/** tab 上的文字选中时的颜色 _/
+selectedColor?: string
+/\*\* tab 的背景色 _/
+backgroundColor?: string
+/** tabbar 上边框的颜色， 仅支持 black/white
+_ @default: black
+_/
+borderStyle?: 'black' | 'white'
+/** tab 的列表，详见 list 属性说明，最少 2 个、最多 5 个 tab _/
+list: TabBarItem[]
+/\*\* tabbar 的位置，可选值 bottom、top
+_ @default: 'bottom'
+_/
+position?: 'bottom' | 'top'
+/\*\* 自定义 tabBar，见[详情](https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html)
+_ @default false
+_ @since 2.1.0
+_/
+custom?: boolean
 }
 
 // encodeURIComponent(JSON.stringify(obj))--------------为跳转 url 时的转换方法。
