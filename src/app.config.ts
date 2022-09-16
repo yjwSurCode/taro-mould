@@ -2,6 +2,7 @@ export default defineAppConfig({
   pages: [
     // 测试
     // "components/guidePage/index",
+    "components/exhibition/index",
     "pages/home/index",
     "pages/login/index",
     "pages/my/index",

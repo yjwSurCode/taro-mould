@@ -21,12 +21,13 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
     searchText,
     iconTheme,
     extClass,
+    fullScreen = false,
     backgroundColor = "red",
   } = props;
 
   const [configStyle, setConfigStyle] = useState<any>();
 
-  const navBarHeight = useRef<number>();
+  const [navBarHeight, setNavBarHeight] = useState<any>();
 
   useEffect(() => {
     let globalSystemInfo = getSystemInfo();
@@ -44,20 +45,20 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
   }, []);
 
   useEffect(() => {
-    navBarHeight.current =
-      configStyle?.windowHeight - configStyle?.safeArea.height;
-
     console.log(
       "111",
       configStyle?.statusBarHeight,
       configStyle?.windowHeight,
       configStyle?.safeArea.height,
       "-----",
-      navBarHeight.current
+      navBarHeight
     );
 
-    navBarHeight.current =
-      configStyle?.windowHeight - configStyle?.safeArea.height + 20;
+    setNavBarHeight(
+      configStyle?.windowHeight - configStyle?.safeArea.height + 20
+    );
+
+    console.log("22222", fullScreen, navBarHeight);
 
     // let rightDistance = windowWidth - capsulePosition.right; //胶囊按钮右侧到屏幕右侧的边距
     // let leftWidth = windowWidth - capsulePosition.left; //胶囊按钮左侧到屏幕右侧的边距
@@ -109,17 +110,33 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
   return (
     <View
       className="customNavPage"
-      style={`backgroundColor: ${backgroundColor};height:${navBarHeight.current}px;`}
+      style={`backgroundColor: ${backgroundColor};height:${navBarHeight}px;position:${
+        fullScreen ? "absolute" : "relative"
+      }`}
     >
-      <Image
-        src={logoImg}
-        style={{
-          width: "60px",
-          height: "60px",
-          position: "absolute",
-          bottom: "0px",
-        }}
-      ></Image>
+      <View>{navBarHeight}</View>
+
+      {fullScreen ? (
+        <Image
+          src={logoImg}
+          style={{
+            width: "60px",
+            height: "60px",
+            position: "absolute",
+            bottom: "0px",
+          }}
+        ></Image>
+      ) : (
+        <Image
+          src={logoImg}
+          style={{
+            width: "60px",
+            height: "60px",
+            position: "absolute",
+            bottom: "0px",
+          }}
+        ></Image>
+      )}
     </View>
     // <View
     //   className={`lxy-nav-bar ${ios ? "ios" : "android"} ${extClass}`}
