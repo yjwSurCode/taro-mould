@@ -1,7 +1,9 @@
-export default {
+export default definePageConfig({
   navigationBarTitleText: "个人信息",
-  //   navigationStyle: "custom",
   enablePullDownRefresh: true,
-  // backgroundTextStyle: "dark",
-  backgroundColor: "#ff0000",
-};
+  backgroundColor: "#ffffff",
+  navigationStyle: "custom",
+  usingComponents: {},
+  // backgroundColorTop: "#740808",
+  // navigationBarBackgroundColor: "#000000",
+});

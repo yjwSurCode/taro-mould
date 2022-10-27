@@ -1,0 +1,30 @@
+.tab-bar {
+  background-color: black;
+  display: flex;
+  margin: 10px;
+  border-radius: 50px;
+  margin-bottom: 30px;
+  z-index: 999;
+
+  animation: fadeInUp; //jackInTheBox; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 0.01s; /* don't forget to set a duration! */
+
+  // left: 50%;
+  // margin-left: -42%;
+  // position: fixed;
+  // width: 85%;
+  // bottom: 1px;
+}
+
+.tab-bar-item {
+  width: 33%;
+  display: flex;
+  justify-content: center;
+}
+
+.bar-image {
+  padding: 20px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+}

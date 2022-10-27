@@ -66,12 +66,14 @@ pageTitle: routerProps,
 <!-- 页面间事件通信通道 -->
 
 EventChannel
+
 emit once off
 
 ## 导航栏
 
 https://docs.taro.zone/docs/apis/ui/navigation-bar/showNavigationBarLoading
 
+页面配置：：
 https://docs.taro.zone/docs/page-config
 
 navigationStyle: "custom", 设置之后后面的参数不生效
@@ -136,7 +138,7 @@ https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Resource_Center_Homepa
 
 小程序公众平台：https://mp.weixin.qq.com/wxamp/home/guide?lang=zh_CN&token=1911103417
 
-appID:wx21850caa5b1a9a71
+appID:wx21850caa5b1a9a71 wxd0ba8f6181d3b17c
 
 页面配置：https://taro-docs.jd.com/taro/docs/page-config
 
@@ -149,3 +151,21 @@ fail: function () {
 Taro.login() //重新登录
 }
 })
+
+# taro animation 用法
+
+# animation.css
+
+#tabbar
+
+文件夹名字和位置必须正确
+必须使用类组件
+点击两次才会切换 使用 redux 解决
+
+蓝湖地址：
+https://lanhuapp.com/?utm_source=baidu&utm_medium=brandzone&utm_campaign=zhutu&utm_term=an
+
+figma 地址：
+https://www.figma.com/file/oU0iyOKBlKjenP6r1YrFl9/MO%E6%96%87%E5%88%9B%E8%A1%8D%E7%94%9F%E5%93%81-%E4%BA%A4%E4%BB%98%E7%A8%BF?node-id=0%3A1
+
+"http://106.12.154.161/images/mo-design/home-ex.png"

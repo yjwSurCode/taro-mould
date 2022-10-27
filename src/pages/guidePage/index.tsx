@@ -6,35 +6,53 @@ import { View, Button, Image, Text, Picker } from "@tarojs/components";
 import { add, asyncAdd } from "../../store/actions";
 import { StoreStatus, OrderStatus } from "../../store/types/index";
 import { getSystemInfo } from "../../utils/hooks/getSystemInfo";
-import CustomNavBar from "../../components/customNavBar/index";
+
 import guideImg from "../../assets/动图.gif";
 
-import "./index.less";
+import logo1 from "../../assets/login/logo1.png";
+import logo2 from "../../assets/login/logo2.png";
+
+import "./index.scss";
 
 export default function Login(): ReturnType<Taro.FC> {
   const [configStyle, setConfigStyle] = useState<any>();
 
   useEffect(() => {
     let globalSystemInfo = getSystemInfo();
-
     console.log(
       "globalSystemInfo",
       globalSystemInfo.then((res) => setConfigStyle(res))
     );
 
+    // console.log(
+    //   Taro.getStorageSync("initFlag"),
+    //   'Taro.getStorageSync("initFlag")'
+    // );
+
+    // if (Taro.getStorageSync("initFlag") == 1) {
+    //   Taro.switchTab({
+    //     url: "/pages/home/index",
+    //   });
+    //   return;
+    // }
+
     setTimeout(() => {
       Taro.switchTab({
         url: "/pages/home/index",
       });
-    }, 2000);
+    }, 1000);
   }, []);
 
   useEffect(() => {}, [configStyle]);
 
   return (
     <View className="guideImgPage">
-      <CustomNavBar></CustomNavBar>
-      <Image src={guideImg} />
+      {/* <CustomNavBar></CustomNavBar> */}
+      {/* <Image src={guideImg} /> */}
+      <View style={{ display: "flex", alignItems: "center" }}>
+        <Image className="img" src={logo1} />
+        <Image className="img" src={logo2} />
+      </View>
     </View>
   );
 }

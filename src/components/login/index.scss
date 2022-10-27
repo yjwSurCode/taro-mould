@@ -1,0 +1,24 @@
+.loginImgPage {
+  height: 100vh;
+  line-height: 100vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+}
+
+.btn {
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 12px 30px;
+  border-radius: 50px;
+  margin: 40px;
+}

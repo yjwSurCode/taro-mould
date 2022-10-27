@@ -1,0 +1,114 @@
+.swiper-container {
+  height: 900px;
+}
+
+.shop-img {
+  width: 100%;
+  height: 900px;
+  z-index: 1;
+}
+
+.action-region {
+  z-index: 99;
+  height: 800px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  bottom: 0px;
+  box-shadow: 10px 10px 15px gray;
+  padding: 50px;
+  box-sizing: border-box;
+  border-top-right-radius: 50px;
+  border-top-left-radius: 50px;
+}
+
+.action-title {
+  /* 中文/bold/20 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 30px;
+  margin-bottom: 50px;
+  /* identical to box height, or 150% */
+}
+
+.action-color {
+  /* 中文/regular/14 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 36px;
+  // line-height: 20px;
+  /* identical to box height, or 143% */
+  color: #000000;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.action-price {
+  /* 中文/bold/20 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 50px;
+  margin-bottom: 30px;
+
+  color: #000000;
+}
+
+.action-content {
+  /* 中文/medium/12 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 40px;
+  /* or 150% */
+
+  color: #000000;
+}
+
+// taro-ui
+.at-input-number__btn {
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+}
+
+.purchasing {
+  display: flex;
+  justify-content: space-between;
+
+  position: fixed;
+  bottom: 60px;
+  width: 87%;
+}
+
+.btn-box {
+  // flex: 1;
+
+  display: flex;
+
+  & view {
+    margin: 0px 0px 0px 15px;
+  }
+
+  .shop-cart {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 30px;
+    padding: 12px 30px;
+    border-radius: 50px;
+  }
+
+  .pick {
+    background-color: #000000;
+    border: 1px solid #000000;
+    color: #ffffff;
+    font-size: 30px;
+    padding: 12px 30px;
+    border-radius: 50px;
+  }
+}

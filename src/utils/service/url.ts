@@ -8,14 +8,19 @@ export const apiPublic = "";
 export const api_login = apiPublic + "/login";
 
 /**
- * 获取用户信息
+ * 获取用户信息  获取opneid
  */
-export const api_getUserInfo = apiPublic + "/getUserInfo";
+export const api_getUserInfo = "/api/wechat/code2Session"; //apiPublic + "/getUserInfo";
 
 /**
  * 保存用户信息
  */
-export const api_setUserInfo = apiPublic + "/setUserInfo";
+export const api_setUserInfo = "/api/user/login"; //apiPublic + "/setUserInfo";
+
+/**
+ * exhibition接口
+ */
+export const api_exhibition = "/api/exhibition/list"; //apiPublic + "/setUserInfo";
 
 /**
  * 修改用户信息

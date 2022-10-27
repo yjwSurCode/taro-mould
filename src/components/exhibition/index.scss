@@ -1,0 +1,81 @@
+.exhibition-page-img {
+  height: 100%;
+  width: 100%;
+
+  animation: jackInTheBox; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1s; /* don't forget to set a duration! */
+}
+
+.image-box {
+  display: flex;
+  justify-content: center;
+  // background-image: url();
+}
+
+.exhibition-disc {
+  position: absolute;
+  bottom: 20vh;
+  text-align: center;
+  color: white;
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-size: 42px;
+  margin: 25px;
+  line-height: 180%;
+
+  animation: bounceInLeft; //backInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 3s; /* don't forget to set a duration! */
+}
+
+.action-container {
+  animation: bounceInDown; //fadeInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1.5s; /* don't forget to set a duration! */
+
+  position: absolute;
+  bottom: 30px;
+
+  .action-bnt-box {
+    &-img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .action-swiper {
+    position: relative;
+    bottom: 30px;
+    left: 130%;
+    text-align: center;
+    color: white;
+
+    &-img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.action-btn-box-img {
+  width: 100px;
+  height: 100px;
+  margin: 30px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.finish-img {
+  position: absolute;
+  width: 300px;
+  height: 350px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}

@@ -26,3 +26,7 @@ declare namespace NodeJS {
       | "jd";
   }
 }
+
+declare interface Window {
+  __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+}

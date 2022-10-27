@@ -1,25 +1,27 @@
 export default defineAppConfig({
   pages: [
-    // 测试
-    // "components/guidePage/index",
-    "components/exhibition/index",
+    "pages/guidePage/index", //引导页
     "pages/home/index",
-    "pages/login/index",
     "pages/my/index",
     "pages/exhibition-list/index",
   ],
-  // subpackages: [
-  //   {
-  //     root: "components",
-  //     name: "pack1",
-  //     pages: ["test/index", "test/template"],
-  //   },
-  //   {
-  //     root: "view",
-  //     name: "pack2",
-  //     pages: ["test/index"],
-  //   },
-  // ],
+  subpackages: [
+    {
+      root: "components",
+      name: "pack1",
+      pages: ["login/index", "exhibition/index"], // 登陆  展览品
+    },
+    {
+      root: "view",
+      name: "pack2",
+      pages: ["market/index", "market-detail/index", "shop-cart/index"], // 商品列表  商品详情  购物车
+    },
+    // {
+    //   root: "screen",
+    //   name: "pack3",
+    //   pages: ["guidePage/index"], // 引导开屏
+    // },
+  ],
 
   // 自定义遇到的问题  https://github.com/NervJS/taro/issues/7302
   tabBar: {
@@ -33,27 +35,27 @@ export default defineAppConfig({
       {
         text: "首页",
         pagePath: "pages/home/index",
-        iconPath: "./assets/home.png",
+        iconPath: "./assets/Slice 16@3x.png",
         selectedIconPath: "./assets/select-home.png",
       },
       {
         text: "展示",
         pagePath: "pages/exhibition-list/index",
-        iconPath: "./assets/home.png",
-        selectedIconPath: "./assets/select-home.png",
+        iconPath: "./assets/Slice 17@3x.png",
+        selectedIconPath: "./assets/select-exhibition.png",
       },
       {
         text: "我的",
         pagePath: "pages/my/index",
-        iconPath: "./assets/doctor.png",
-        selectedIconPath: "./assets/select-doctor.png",
+        iconPath: "./assets/Slice 18@3x.png",
+        selectedIconPath: "./assets/select-my.png",
       },
     ],
   },
   window: {
     backgroundTextStyle: "light",
     navigationBarBackgroundColor: "#fff",
-    navigationBarTitleText: "吹风小队",
+    navigationBarTitleText: "MO DESIGN",
     navigationBarTextStyle: "black",
   },
 });

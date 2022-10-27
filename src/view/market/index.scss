@@ -1,0 +1,106 @@
+.market-title {
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  padding-top: 50px;
+}
+
+.filter-box {
+  display: flex;
+  font-size: 30px;
+  padding: 20px 50px 30px 30px;
+
+  & view {
+    height: 55px;
+    line-height: 55rpx;
+    margin: 0px 20px;
+  }
+}
+
+.commodity-list-box {
+  .commodity-list-title {
+    display: flex;
+    margin: 0px 50px 20px 50px;
+
+    .right {
+      flex: 1;
+      text-align: right;
+    }
+
+    .text {
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 40px;
+    }
+
+    .img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.commodity-list-content {
+  display: flex;
+  flex-wrap: wrap;
+
+  .item {
+    width: 50%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  // 判断单双 设置样式
+
+  //奇数行
+  & :nth-child(odd) {
+    padding-left: 50px;
+    padding-right: 20px;
+    // margin-left: 50px;
+    // margin-right: 20px;
+
+    .item-img-container {
+      padding: 0px;
+    }
+    .item-img {
+      padding: 0px;
+      height: 370px;
+      background-repeat: no-repeat;
+    }
+  }
+
+  //偶数行
+  & :nth-child(even) {
+    padding-right: 50px;
+    padding-left: 20px;
+
+    .item-img-container {
+      padding: 0px;
+    }
+    .item-img {
+      padding: 0px;
+      height: 370px;
+      background-repeat: no-repeat;
+    }
+  }
+
+  // 下面两同时设置 border-radius
+  .item-img-container {
+    border-radius: 30px;
+    box-shadow: 5px 3px 13px rgb(216, 216, 216);
+  }
+  .item-img {
+    border-radius: 30px;
+    width: 100%;
+  }
+
+  .item-title {
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-weight: bold;
+    padding: 0;
+    margin: 20px 0px;
+  }
+}

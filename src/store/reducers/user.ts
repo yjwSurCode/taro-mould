@@ -1,8 +1,10 @@
-import { ADD, MINUS, TOKEN } from "../types/index";
+import { ADD, MINUS, TOKEN, SWITCH } from "../types/index";
 
 const INITIAL_STATE = {
   userInit: 0,
   userToken: "",
+  selectIndex: 0,
+  customTabBar: 75,
 };
 
 export default function counter(state = INITIAL_STATE, action) {
@@ -17,6 +19,12 @@ export default function counter(state = INITIAL_STATE, action) {
         ...state,
         userToken: action.payload.token,
       };
+    case SWITCH:
+      return {
+        ...state,
+        selectIndex: action.payload,
+      };
+
     default:
       return state;
   }

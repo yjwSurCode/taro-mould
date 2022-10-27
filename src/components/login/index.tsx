@@ -14,6 +14,11 @@ import {
   api_setUserInfo,
 } from "../../utils/service/url";
 
+import logo1 from "../../assets/login/logo1.png";
+import logo2 from "../../assets/login/logo2.png";
+
+import "./index.scss";
+
 export default function Login(): ReturnType<Taro.FC> {
   const router = useRouter();
 
@@ -31,13 +36,18 @@ export default function Login(): ReturnType<Taro.FC> {
   const handleLogin = () => {
     console.log("111111111111111111111", baseUrl + api_getUserInfo);
     return Taro.login().then((res) => {
+      console.log("1.1", res); // {errMsg: "login:ok", code: "063n2f0w3zx9rZ2rLf1w3AEm6t4n2f0r"}
       Taro.hideLoading();
       return Taro.request({
         url: baseUrl + api_getUserInfo,
-        method: "POST",
-        data: { jsCode: res.code },
+        method: "GET",
+        data: { code: res.code },
       }).then((loginResult) => {
-        console.log(loginResult, "2222222222222222loginResultloginResult");
+        console.log(
+          loginResult,
+          "2222222222222222-loginResult",
+          loginResult.data.data.openid
+        );
         if (loginResult.statusCode != 200) {
           Taro.showToast({
             title: "登录失败",
@@ -47,11 +57,16 @@ export default function Login(): ReturnType<Taro.FC> {
           return;
         }
 
+        //! 存opneid
+        Taro.setStorageSync("openid", loginResult.data.data.openid);
+
+        return loginResult.data.data.openid;
+
         return Taro.getSetting().then((getSetting) => {
           if (getSetting.authSetting["scope.userInfo"]) {
             return getUserInfo(loginResult.data[0].data.openid);
           }
-        });
+        }); //
       });
     });
   };
@@ -74,25 +89,32 @@ export default function Login(): ReturnType<Taro.FC> {
             Taro.getUserProfile({ desc: "用于完善用户信息" })
               .then((userProfile) => {
                 console.log(
+                  userProfile,
                   userProfile.userInfo.nickName,
                   "userProfile.userInfo.nickName",
                   JSON.stringify(userProfile.userInfo.nickName)
                 );
 
                 return TaroRequest.post(api_setUserInfo, {
-                  userInfo: res.data,
-                  userName: userProfile.userInfo.nickName,
+                  openid: Taro.getStorageSync("openid"),
+                  nickName: userProfile.userInfo.nickName,
+                  gender: userProfile.userInfo.gender,
                 }).then((res) => {
-                  console.log("登录返回信息", res.data[0]);
+                  console.log("登录返回信息", res.data.data);
 
-                  //存token(具体数据结构项目来定)
                   // dispatch(setToken({ token: "Bearer " + res.data[0].token }));
+                  //!存token(具体数据结构项目来定)
                   Taro.setStorageSync(
                     "Authorization",
-                    "Bearer " + res.data[0].token
+                    "Bearer " + res.data.data.token
                   );
-                  // 存userId(具体数据结构项目来定)
-                  Taro.setStorageSync("userId", res.data[0].data);
+                  //!存userId(具体数据结构项目来定)
+                  Taro.setStorageSync("userId", res.data.data.id);
+                  //!存userId(具体数据结构项目来定)
+                  Taro.setStorageSync(
+                    "userName",
+                    userProfile.userInfo.nickName
+                  );
 
                   Taro.showToast({
                     title: "欢迎 " + userProfile.userInfo.nickName + "登录",
@@ -104,7 +126,7 @@ export default function Login(): ReturnType<Taro.FC> {
                     Taro.switchTab({
                       url: "/pages/home/index",
                     });
-                  });
+                  }, 1000);
                 });
               })
               .catch((error) => {
@@ -125,13 +147,22 @@ export default function Login(): ReturnType<Taro.FC> {
 
   return (
     <View className="index">
-      {/* <View>{order.orderInit}</View> */}
-      <Button style={{ marginTop: "20vh" }} onClick={login}>
-        login
+      <View
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "40%",
+        }}
+      >
+        <Image className="img" src={logo1} />
+        <Image className="img" src={logo2} />
+      </View>
+      <Button className="btn" style={{ marginTop: "20vh" }} onClick={login}>
+        一键登录
       </Button>
 
       {/* taro getPhoneNumber:fail no permission 微信认证-未认证-个人号无法认证 */}
-
       {/* <AtButton
         type="primary"
         openType="getPhoneNumber"

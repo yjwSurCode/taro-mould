@@ -1,4 +1,11 @@
-import { ADD, TOKEN, MINUS, SET } from "../types/index";
+import { SWITCH, ADD, TOKEN, MINUS, SET } from "../types/index";
+
+export const switchFn = (getState, dispatch?) => {
+  return {
+    type: SWITCH,
+    payload: getState,
+  };
+};
 
 export const add = (getState, dispatch?) => {
   return {
@@ -30,15 +37,31 @@ export const setCurrentList = () => (dispatch, getState) => {
   }
 };
 
-// 异步的action   getState, getStates 是传递的两个参数  dispatch是函数
+// 异步的action   getState, getStates 是传递的参数  dispatch是函数
 export function asyncAdd(getState, getStates?) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(55555);
-      }, 2000);
+      }, 200);
     }).then((res) => {
       dispatch(add(res));
+    });
+  };
+}
+
+export function asyncSwitchAction(getState, getStates?) {
+  // return (dispatch) => {
+  //   dispatch(switchFn(getState));
+  // };
+  console.log(getState, "p-getState");
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(getState);
+      }, 0);
+    }).then((res) => {
+      dispatch(switchFn(res));
     });
   };
 }

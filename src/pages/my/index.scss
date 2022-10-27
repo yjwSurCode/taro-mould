@@ -1,0 +1,148 @@
+.My {
+  min-height: 100vh;
+}
+
+.my-page {
+  margin: 10px 50px;
+}
+
+.Exhibition-box {
+  box-shadow: 5px 3px 13px #d8d8d8;
+  border-radius: 20px;
+  padding: 20px 50px;
+  text-align: center;
+
+  .logo-img {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    text-align: center;
+    top: -90px;
+    position: relative;
+  }
+
+  .nickname {
+    display: block;
+
+    position: relative;
+    top: -30px;
+
+    /* 中文/bold/16 */
+
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    /* identical to box height, or 150% */
+
+    text-align: center;
+
+    color: #000000;
+  }
+  .Exhibition-number {
+    display: flex;
+    justify-content: space-between;
+
+    .nm {
+      /* 中英数/bold/24 */
+
+      font-family: "HarmonyOS Sans SC";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 48px;
+      /* identical to box height, or 150% */
+
+      text-align: center;
+
+      color: #000000;
+    }
+
+    .tx {
+      /* 中文/medium/12 */
+
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 24px;
+      /* identical to box height, or 150% */
+
+      text-align: center;
+
+      color: #999999;
+    }
+  }
+}
+
+.trajectory-box {
+  box-shadow: 5px 3px 13px #d8d8d8;
+  border-radius: 20px;
+  padding: 40px 60px;
+  margin: 30px 0px;
+  text-align: center;
+
+  .trajectory-title {
+    display: block;
+    /* 中文/bold/16 */
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    /* identical to box height, or 150% */
+    text-align: center;
+    color: #000000;
+    text-align: left;
+  }
+
+  .trajectory {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .trajectory-img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.service-box {
+  box-shadow: 5px 3px 13px #d8d8d8;
+  border-radius: 20px;
+  padding: 40px 60px;
+  margin: 30px 0px;
+  text-align: center;
+
+  .service-title {
+    display: block;
+    /* 中文/bold/16 */
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    /* identical to box height, or 150% */
+    text-align: center;
+    color: #000000;
+    text-align: left;
+  }
+
+  .service {
+    // display: flex;
+    // justify-content: space-between;
+  }
+  .service-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px;
+    margin: 20px 0px;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .service-img {
+    width: 50px;
+    height: 50px;
+  }
+}

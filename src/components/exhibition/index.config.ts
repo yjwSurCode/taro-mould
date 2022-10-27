@@ -1,6 +1,6 @@
 export default {
   // navigationBarTitleText: "",
-    navigationStyle: "custom",
-  enablePullDownRefresh: true,
+  navigationStyle: "custom",
+  enablePullDownRefresh: false,
   backgroundTextStyle: "dark",
 };

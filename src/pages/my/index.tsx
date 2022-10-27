@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import { Component } from "react";
 import { connect } from "react-redux";
-import { OpenData, View } from "@tarojs/components";
+import { OpenData, View, Image, Text, ScrollView } from "@tarojs/components";
 import {
   AtList,
   AtListItem,
@@ -9,6 +9,7 @@ import {
   AtGrid,
   AtFloatLayout,
   AtCard,
+  AtDivider,
 } from "taro-ui";
 import Taro from "@tarojs/taro";
 
@@ -22,7 +23,19 @@ import {
   api_recordList,
 } from "../../utils/service/url";
 
-class Setting extends Component {
+import CustomNavBar from "../../components/customNavBar/index";
+
+import logoImg from "../../assets/logo.png";
+
+import shop1 from "../../assets/my/Slice 21@2x.png";
+import shop2 from "../../assets/my/Slice 22@2x.png";
+import shop3 from "../../assets/my/Slice 23@2x.png";
+import shop4 from "../../assets/my/Slice 24@2x.png";
+
+import rightArrow from "../../assets/right-arrow-noBorder.png";
+
+import "./index.scss";
+class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,26 +47,9 @@ class Setting extends Component {
     };
   }
 
-  // 监听下拉刷新
-  onPullDownRefresh() {
-    this.getData();
-    console.log("onPullDownRefresh");
-    setTimeout(() => {
-      Taro.stopPullDownRefresh();
-    }, 1000);
-  }
-  // 监听上拉触底
-  onReachBottom() {
-    this.getData();
-    console.log("onReachBottom");
-  }
-
-  componentDidMount = () => {
-    this.getData();
-  };
-
   getData = () => {
-    console.log("getDatagetDatagetDatagetData");
+    console.log("111111");
+    return;
     TaroRequest.post(api_recordList, {
       userId: Taro.getStorageSync("userId"), //todo 返回的openid
     }).then((res) => {
@@ -113,9 +109,9 @@ class Setting extends Component {
     );
   };
 
-  opinion = () => {
+  goShopCart = () => {
     Taro.navigateTo({
-      url: "/pages/login/index",
+      url: "/view/shop-cart/index",
       events: {
         // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
         acceptDataFromOpenedPage: function (data) {
@@ -133,93 +129,202 @@ class Setting extends Component {
     });
   };
 
+  componentDidMount = () => {
+    Taro.showLoading({
+      title: "Loading...",
+      mask: true,
+    });
+
+    setTimeout(() => {
+      Taro.hideLoading();
+    }, 1000);
+
+    const val = Taro.getStorageSync("userId");
+    if (!val) {
+      setTimeout(() => {
+        Taro.showToast({
+          title: "请登录",
+          icon: "error",
+          duration: 1000,
+        });
+      }, 1000);
+
+      setTimeout(() => {
+        Taro.redirectTo({
+          url: "/components/login/index",
+        });
+      }, 2000);
+
+      return;
+    }
+
+    this.getData();
+  };
+
+  // 监听下拉刷新
+  onPullDownRefresh() {
+    this.getData();
+    console.log("onPullDownRefresh");
+    setTimeout(() => {
+      Taro.stopPullDownRefresh();
+    }, 1000);
+  }
+  // 监听上拉触底
+  onReachBottom() {
+    this.getData();
+    console.log("onReachBottom");
+  }
+
   render() {
     return (
-      <View>
-        {/* <Header title="设置" /> */}
-        <View
-          style={{ marginTop: "20px" }}
-          className="at-row at-row__justify--center at-row__align--center"
-        >
-          <View className="at-col-2 at-col--auto">
-            <OpenData type="userAvatarUrl" />
-          </View>
-          <View style={{ marginLeft: "20px" }} className="at-col-2">
-            <OpenData type="userNickName" defaultText="微信用户" />
-          </View>
-        </View>
-        <AtFloatLayout
-          isOpened={(this.state as any).isOpened}
-          title="记录"
-          onClose={this.handleClose.bind(this)}
-        >
-          {(this.state as any).list.map((item, index) => {
-            return (
-              <AtCard
-                note="" //小Tips
-                extra={item.time} //额外信息
-                title="吹风小队抢购表"
-                thumb="http://www.logoquan.com/upload/list/20180421/logoquan15259400209.PNG"
-              >
-                {item.status}
-                {/* {Taro.getStorageSync("status") == ""
-                  ? "今日未抢到"
-                  : Taro.getStorageSync("status")} */}
-              </AtCard>
-            );
-          })}
-        </AtFloatLayout>
-        <AtGrid
-          onClick={(_, index) => this.orderDetail(this, index)}
-          mode="rect"
-          data={[
-            {
-              image:
-                "https://img14.360buyimg.com/jdphoto/s72x72_jfs/t17251/336/1311038817/3177/72595a07/5ac44618Na1db7b09.png",
-              value: "我的订单",
-            },
-            {
-              image:
-                "https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png",
-              value: "待付款",
-            },
-            {
-              image:
-                "https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png",
-              value: "未使用",
-            },
-            {
-              image:
-                "https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png",
-              value: "已使用",
-            },
-            {
-              image:
-                "https://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png",
-              value: "已退款",
-            },
+      <View className="My">
+        <ScrollView scrollX={false}>
+          <CustomNavBar></CustomNavBar>
+          <View className="my-page">
+            <View className="Exhibition-box" style={{ marginTop: "85px" }}>
+              <Image
+                onClick={this.goShopCart}
+                className="logo-img"
+                // style={{ width: "100%", height: "90vh" }}
+                src={logoImg}
+              ></Image>
+              <Text className="nickname">
+                {Taro.getStorageSync("userName") || "我的昵称"}
+              </Text>
+              <View className="Exhibition-number">
+                <View className="Exhibition-number-item">
+                  <View className="nm">0</View>
+                  <View className="tx">我的订单</View>
+                </View>
+                <View className="Exhibition-number-item">
+                  <View className="nm">0</View>
+                  <View className="tx">文创碎片</View>
+                </View>
+                <View className="Exhibition-number-item">
+                  <View className="nm">0</View>
+                  <View className="tx">搜索指南</View>
+                </View>
+              </View>
+            </View>
+            {/* 轨迹 */}
+            <View className="trajectory-box">
+              <View className="trajectory-title">Mo轨迹</View>
+              <AtDivider
+                // content="Mo轨迹"
+                // className="trajectory-title"
+                lineColor="#dedede"
+                fontColor="#000000"
+                customStyle={{ fontWeight: "bold", height: "20px" }}
+              />
+              <View className="trajectory">
+                <View className="trajectory-item">
+                  <Image
+                    onClick={this.goShopCart}
+                    className="trajectory-img"
+                    src={shop1}
+                  ></Image>
+                  <View>待付款</View>
+                </View>
+                <View className="trajectory-item">
+                  <Image
+                    onClick={this.goShopCart}
+                    className="trajectory-img"
+                    src={shop2}
+                  ></Image>
+                  <View>待发货</View>
+                </View>
+                <View className="trajectory-item">
+                  <Image
+                    onClick={this.goShopCart}
+                    className="trajectory-img"
+                    src={shop3}
+                  ></Image>
+                  <View>待收货</View>
+                </View>
+                <View className="trajectory-item">
+                  <Image
+                    onClick={this.goShopCart}
+                    className="trajectory-img"
+                    src={shop4}
+                  ></Image>
+                  <View>待评价</View>
+                </View>
+              </View>
+            </View>
+            {/* 其他服务 */}
+            <View className="service-box">
+              <View className="service-title">其他服务</View>
+              <AtDivider
+                lineColor="#dedede"
+                fontColor="#000000"
+                customStyle={{ fontWeight: "bold", height: "20px" }}
+              />
+              <View className="service">
+                <View className="service-item">
+                  <View>我的客服</View>
+                  <Image
+                    onClick={this.goShopCart}
+                    className="service-img"
+                    src={rightArrow}
+                  ></Image>
+                </View>
+                <View className="service-item">
+                  <View>我的地址</View>
+                  <Image
+                    onClick={this.goShopCart}
+                    className="service-img"
+                    src={rightArrow}
+                  ></Image>
+                </View>
+                <View className="service-item">
+                  <View>常见问题</View>
+                  <Image
+                    onClick={this.goShopCart}
+                    className="service-img"
+                    src={rightArrow}
+                  ></Image>
+                </View>
+              </View>
+            </View>
 
-            {
-              image:
-                "https://img30.360buyimg.com/jdphoto/s72x72_jfs/t5770/97/5184449507/2423/294d5f95/595c3b4dNbc6bc95d.png",
-              value: "手机馆",
-            },
-          ]}
-        />
+            {/* <View className="service-box">
+            <View className="service-title">Mo轨迹</View>
+            <View className="service-item">
+              <View>我的客服</View>
+              <Image
+                onClick={this.goShopCart}
+                className="logo-img"
+                src={shop2}
+              ></Image>
+            </View>
+            <View className="service-item">
+              <View>我的地址</View>
+              <Image
+                onClick={this.goShopCart}
+                className="logo-img"
+                src={shop3}
+              ></Image>
+            </View>
+            <View className="service-item">
+              <View>常见问题</View>
+              <Image
+                onClick={this.goShopCart}
+                className="logo-img"
+                src={shop4}
+              ></Image>
+            </View>
+          </View> */}
 
-        <View>
-          <AtList hasBorder={false}>
-            <AtListItem title="意见反馈" arrow="right" />
-            <AtListItem
-              title="退出登录"
-              onClick={this.handleLogoutClick}
-              arrow="right"
-            />
-          </AtList>
-        </View>
+            {/* <Image
+          onClick={this.goShopCart}
+          style={{ width: "100%", height: "90vh" }}
+          src={"http://106.12.154.161/images/mo-design/my.jpg"}
+        ></Image> */}
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
-export default Setting;
+export default MyPage;

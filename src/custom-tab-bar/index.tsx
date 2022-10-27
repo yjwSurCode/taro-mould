@@ -1,79 +1,120 @@
 import { Component } from "react";
 import Taro from "@tarojs/taro";
-import { CoverView, CoverImage } from "@tarojs/components";
+import {
+  Text,
+  View,
+  Button,
+  CoverView,
+  CoverImage,
+  Image,
+} from "@tarojs/components";
 
-// import "./index.scss";
+import { add, asyncAdd, asyncSwitchAction } from "../store/actions";
+import { StoreStatus, UserStatus } from "../store/types/index";
+import { connect } from "react-redux";
 
-export default class Index extends Component {
-  state = {
-    selected: 0,
-    color: "#000000",
-    selectedColor: "#DC143C",
-    list: [
-      //TODO 这里的path必须在主包
-      {
-        text: "首页",
-        pagePath: "../../pages/home/index",
-        iconPath: "../assets/home.png",
-        selectedIconPath: "../assets/select-home.png",
-      },
-      {
-        text: "展示",
-        pagePath: "../../pages/exhibition-list/index",
-        iconPath: "../assets/home.png",
-        selectedIconPath: "../assets/select-home.png",
-      },
-      {
-        text: "我的",
-        pagePath: "../../pages/my/index",
-        iconPath: "../assets/doctor.png",
-        selectedIconPath: "../assets/select-doctor.png",
-      },
-    ],
+import "./index.scss";
+
+const mapStateToProps = (state) => {
+  console.log("pp1", state.user.selectIndex);
+  return {
+    index: state.user.selectIndex,
   };
+};
 
-  switchTab(index, url) {
-    this.setSelected(index);
-    Taro.switchTab({ url });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    switch: (v) => {
+      const action = asyncSwitchAction(v);
+      dispatch(action);
+    },
+    minus: () => {
+      const action = asyncAdd(1);
+      dispatch(action);
+    },
+  };
+};
+
+class Tabbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: -1,
+      color: "#000000",
+      selectedColor: "#DC143C",
+      list: [
+        //TODO 这里的path必须在主包
+        {
+          text: "首页",
+          pagePath: "/pages/home/index",
+          iconPath: "../assets/Slice 16@3x.png",
+          selectedIconPath: "../assets/select-home.png",
+        },
+        {
+          text: "展示",
+          pagePath: "/pages/exhibition-list/index",
+          iconPath: "../assets/Slice 17@3x.png",
+          selectedIconPath: "../assets/select-exhibition.png",
+        },
+        {
+          text: "我的",
+          pagePath: "/pages/my/index",
+          iconPath: "../assets/Slice 18@3x.png",
+          selectedIconPath: "../assets/select-my.png",
+        },
+      ],
+    };
   }
 
-  setSelected(idx: number) {
-    this.setState({
-      selected: idx,
+  componentDidMount() {
+    // const dispatch = useDispatch();
+    // const user: UserStatus = useSelector((state: StoreStatus) => state.user);
+    // console.log(user, "ppppp");
+  }
+
+  switchTab(index, url) {
+    Taro.switchTab({
+      url,
+      complete: () => {
+        (this.props as any).switch(index);
+      },
     });
+    //触发redux
+    // (this.props as any).switch(index);
   }
 
   render() {
-    const { list, selected, color, selectedColor } = this.state;
-
+    console.log(this.props, "pp--this.props", this.state);
     return (
-      <CoverView className="tab-bar">
-        1111199999
-        <CoverView className="tab-bar-border"></CoverView>
-        {list.map((item, index) => {
+      //! CoverView --->View
+      <View className="tab-bar">
+        {/* {(this.props as any).index}
+        <Text onClick={() => (this.props as any).switch(1)}>切换1</Text> */}
+        {(this.state as any).list.map((item, index) => {
           return (
-            <CoverView
+            <View
               key={index}
               className="tab-bar-item"
               onClick={this.switchTab.bind(this, index, item.pagePath)}
             >
-              <CoverImage
-                style={{ width: "20px", height: "20px" }}
-                src={selected === index ? item.selectedIconPath : item.iconPath}
+              {/* //! CoverImage ---> Image*/}
+              <Image
+                className="bar-image"
+                // style={{ width: "1.25rem", height: "1.25rem" }}
+                src={
+                  (this.props as any).index === index
+                    ? item.selectedIconPath
+                    : item.iconPath
+                }
               />
-              <CoverView
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  color: selected === index ? selectedColor : color,
-                }}
-              >
-                {item.text}
-              </CoverView>
-            </CoverView>
+            </View>
           );
         })}
-      </CoverView>
+      </View>
     );
   }
 }
+
+const ClassComponent = connect(mapStateToProps, mapDispatchToProps)(Tabbar);
+
+export default ClassComponent;

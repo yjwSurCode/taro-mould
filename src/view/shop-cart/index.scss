@@ -1,0 +1,124 @@
+// taro-ui
+.at-input-number__btn {
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+}
+.at-checkbox__icon-cnt {
+  color: rgb(255, 255, 255);
+  background-color: #000000 !important;
+}
+.at-checkbox::before {
+  border: none;
+}
+.at-checkbox::after {
+  border: none;
+}
+.at-checkbox__option {
+  padding: 0 !important;
+}
+.at-checkbox__option-wrap {
+  padding: 0;
+}
+
+.shop-list {
+}
+
+.shop-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px 40px;
+  padding: 30px 20px;
+  box-shadow: 5px 5px 15px #e2e2e2;
+  border-radius: 20px;
+}
+
+.item-img {
+  width: 150px;
+  height: 150px;
+  margin: 0px 20px 0px 0px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-content {
+  flex: 1;
+}
+
+.action-title {
+  /* 中文/bold/14 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 28px;
+  /* identical to box height, or 143% */
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.action-have {
+  /* 中文/regular/14 */
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  color: #000000;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.action-price {
+}
+
+.settlement-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+
+  position: fixed;
+  bottom: 10px;
+  width: calc(100% - 2 * 30px);
+}
+
+.settlement-content {
+  display: flex;
+  align-items: center;
+}
+
+.allPrice {
+  /* 中文/bold/14 */
+
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 50px;
+  /* identical to box height, or 143% */
+  color: #000000;
+}
+
+.disc {
+  font-family: "PingFang SC";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 28px;
+  color: #ababab;
+}
+
+.settlement {
+  background-color: #000000;
+  border: 1px solid #000000;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 15px 50px;
+  border-radius: 50px;
+}

@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "taskApp",
   "description": "做任务",
-  "appid": "wx21850caa5b1a9a71",
+  "appid": "wxd0ba8f6181d3b17c",
   "setting": {
     "urlCheck": true,
     "es6": false,

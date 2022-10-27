@@ -1,0 +1,53 @@
+.exhibition-list-page {
+  min-height: 100vh;
+}
+
+.exhibition-search {
+  margin: 50px;
+}
+.exhibition-list {
+  margin: 0px 50px;
+
+  &-title {
+    color: black;
+    font-weight: bold;
+    font-size: 40px;
+    font-family: "PingFang SC";
+  }
+
+  .list-item {
+    margin-top: 50px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .list-item-img {
+    height: 300px;
+    width: 100%;
+  }
+
+  .list-item-title {
+    font-size: 32px;
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-weight: 00;
+  }
+
+  .list-item-disc {
+    /* 中文/regular/14 */
+
+    font-family: "PingFang SC";
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 40px;
+    /* identical to box height, or 143% */
+
+    color: #000000;
+    opacity: 0.3;
+  }
+}
+
+.at-search-bar__placeholder-wrap {
+  flex-grow: 0 !important;
+}

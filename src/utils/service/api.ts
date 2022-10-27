@@ -2,7 +2,7 @@ import Taro, { request } from "@tarojs/taro";
 import { HTTP_STATUS } from "./type";
 import { getCurrentPageUrl } from "../hooks/assist";
 
-export const baseUrl = "http://106.12.154.161:3000";
+export const baseUrl = "http://106.12.154.161:8888";
 // export const baseUrl = "http://localhost:3000";
 
 export default {
