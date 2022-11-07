@@ -109,6 +109,12 @@ custom?: boolean
 const routerProps = getCurrentInstance().router.params;
 // JSON.parse(decodeURIComponent(options.obj))-----------为接收参数页面的转换方法。
 
+
+https://juejin.cn/post/7034323356459466760
+box-shadow: 1px 1px 8px 3px #1e1b1b41;
+
+示例：https://shadows.brumm.af/
+
 问题：Deprecation Warning: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0. border-radius: $at-button-height / 2;
 
 因为 sass 新版本目前弃用“/”的用法，sass 自定义 element theme 时会报 warnning
@@ -155,6 +161,51 @@ Taro.login() //重新登录
 # taro animation 用法
 
 # animation.css
+
+# 页面数据传递
+
+Taro.navigateTo({
+url: "/view/market-detail/index",
+events: {
+// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+acceptDataFromOpenedPage: function (data) {
+console.log(data);
+},
+someEvent: function (data) {
+console.log(data);
+},
+},
+success: function (res) {
+// 通过 eventChannel 向被打开页面传送数据
+res.eventChannel.emit("acceptDataFromOpenerPage", {
+data: commodityList,
+});
+},
+});
+
+Taro.showLoading({
+title: "加载中",
+});
+const pages = Taro.getCurrentPages();
+const current = pages[pages.length - 1];
+const eventChannel = current.getOpenerEventChannel();
+
+    // 触发A页面的 events 中的 someEvent
+    eventChannel.emit("someEvent", { queNumber: "lsk--->" });
+
+    // 接收 A页面的 events 中的 acceptDataFromOpenerPage 传递的数据
+    eventChannel.on("acceptDataFromOpenerPage", (res) => {
+      console.log("page_test", res);
+      setExData(res.data);
+
+      if (!res) {
+        Taro.showToast({ title: "error", icon: "error" });
+        return;
+      }
+      setTimeout(function () {
+        Taro.hideLoading();
+      }, 300);
+    });
 
 #tabbar
 

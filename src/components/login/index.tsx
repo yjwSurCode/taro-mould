@@ -16,6 +16,7 @@ import {
 
 import logo1 from "../../assets/login/logo1.png";
 import logo2 from "../../assets/login/logo2.png";
+import logo from "../../assets/login/logo3.png";
 
 import "./index.scss";
 
@@ -155,10 +156,11 @@ export default function Login(): ReturnType<Taro.FC> {
           marginTop: "40%",
         }}
       >
-        <Image className="img" src={logo1} />
-        <Image className="img" src={logo2} />
+        {/* <Image className="img" src={logo1} />
+        <Image className="img" src={logo2} /> */}
+        <Image className="img" src={logo} />
       </View>
-      <Button className="btn" style={{ marginTop: "20vh" }} onClick={login}>
+      <Button className="btn" style={{ marginTop: "30vh" }} onClick={login}>
         一键登录
       </Button>
 

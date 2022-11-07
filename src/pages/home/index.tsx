@@ -61,28 +61,14 @@ export default function Home(): ReturnType<Taro.FC> {
     { id: 2, img: "http://106.12.154.161/images/mo-design/home-ex.png" },
   ]);
 
-  const [ExData, setExData] = useState([]);
+  const [ExData, setExData] = useState<Array<{ minImg?: string }> | []>([]);
 
   const [commodityList, setCommodityList] = useState([
     {
-      img: "http://106.12.154.161/images/mo-design/commodity1.png",
-      classic: "百年无极",
-      title: "园丁手机壳",
-    },
-    {
-      img: "http://106.12.154.161/images/mo-design/commodity2.png",
-      classic: "百年无极",
-      title: "主题马克杯",
-    },
-    {
-      img: "http://106.12.154.161/images/mo-design/commodity3.png",
-      classic: "百年无极",
-      title: "园丁手机壳",
-    },
-    {
-      img: "http://106.12.154.161/images/mo-design/commity4.png",
-      classic: "百年无极",
-      title: "园丁手机壳",
+      imgUrls: "http://106.12.154.161/images/mo-design/commodity1.png",
+      theme: "百年无极",
+      name: "园丁手机壳",
+      isChoiceness: true,
     },
   ]);
 
@@ -92,7 +78,33 @@ export default function Home(): ReturnType<Taro.FC> {
 
   const onChange = () => {};
 
+  async function imgToBase64({ path }) {
+    try {
+      const result = await Taro.request({
+        url: path,
+        responseType: "arraybuffer",
+      });
+      if (result && result.statusCode !== 200) {
+        Taro.getLogManager().warn("图片获取失败", result);
+        throw new Error("图片获取失败。");
+      }
+      let base64 = Taro.arrayBufferToBase64(result.data);
+      base64 = "data:image/jpeg;base64," + base64;
+      return base64;
+    } catch (error) {
+      console.warn("=> utilssearch.ts error imgToBase64", error);
+      throw error;
+    }
+  }
+
   const goExhibitionPage = () => {
+    // Taro.preload(
+    //   imgToBase64({
+    //     path: "http://rjkwz08nt.hn-bkt.clouddn.com/FuyaPr0thb3fEf6_pW-tIStcMdh6",
+    //   })
+    // );
+    Taro.preload(ExData);
+
     Taro.navigateTo({
       url: "/components/exhibition/index",
       events: {
@@ -103,12 +115,11 @@ export default function Home(): ReturnType<Taro.FC> {
         someEvent: function (data) {
           console.log(data);
         },
-        // ...
       },
       success: function (res) {
         // 通过eventChannel向被打开页面传送数据
         res.eventChannel.emit("acceptDataFromOpenerPage", {
-          data: [123123, "test1111"],
+          data: ExData,
         });
       },
     });
@@ -120,26 +131,40 @@ export default function Home(): ReturnType<Taro.FC> {
     });
   };
 
-  const goMarketDetail = () => {
-    console.log("111");
+  const goMarketDetail = (v) => {
+    //TODO 传递数据到详情页面
     Taro.navigateTo({
       url: "/view/market-detail/index",
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        acceptDataFromOpenedPage: function (data) {
+          console.log(data);
+        },
+        someEvent: function (data) {
+          console.log(data);
+        },
+      },
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit("acceptDataFromOpenerPage", {
+          data: v,
+        });
+      },
     });
   };
 
   const initHomeData = () => {
     //! 请求首页数据
-    // TaroRequest.post(api_orderList, {
-    //   // userId: Taro.getStorageSync("userId"),
-    // }).then((res) => {
-    //   console.log(res, "api_orderList");
-    //   Taro.hideLoading();
-    //   //TODO 后台定义数据格式 res.data.data[0].goods
-    //   if (res.data.data[0].goods == 0) {
-    //     // setTitle("抢购结束");
-    //     // setText("秒杀已抢购结束");
-    //   }
-    // });
+    TaroRequest.post(api_orderList, {
+      page: 1,
+      limit: 1000,
+      // userId: Taro.getStorageSync("userId"),
+    }).then((res) => {
+      console.log(res.data.data, res.data.data.records, "api_orderList1111");
+      setCommodityList(res.data.data.records);
+      Taro.hideLoading();
+      //TODO 后台定义数据格式 res.data.data
+    });
   };
 
   const initExhibition = () => {
@@ -203,11 +228,12 @@ export default function Home(): ReturnType<Taro.FC> {
         size={32}
         color="#13CE66"
       ></AtActivityIndicator> */}
-      <View style={{ margin: "20px", marginTop: "50px" }} className="">
+      <View style={{ margin: "20px", marginTop: "60px" }} className="">
         <View className="home-title">早上好，</View>
         <View className="home-title">即刻开启您的艺术空间</View>
       </View>
       <AtSearchBar
+        // showActionButton={true}
         value={searchValue}
         onChange={onChange}
         placeholder="百年无极艺术展"
@@ -222,14 +248,14 @@ export default function Home(): ReturnType<Taro.FC> {
         indicatorDots
         autoplay
       >
-        {swiperList.map((item, index) => {
+        {ExData.map((item, index) => {
           return (
             <SwiperItem>
               <View className="Exhibition-btn-swiper">
                 {/* //! image coverImage 有区别 */}
                 <Image
                   className="bar-image"
-                  src={item.img}
+                  src={item.minImg}
                   onError={imageError}
                 ></Image>
                 {/* <CoverImage
@@ -243,7 +269,7 @@ export default function Home(): ReturnType<Taro.FC> {
                     style={{
                       display: "inline-block",
                       verticalAlign: "super",
-                      // marginRight: "5px",
+                      fontWeight: "bold",
                     }}
                   >
                     点击观看精华展
@@ -269,28 +295,40 @@ export default function Home(): ReturnType<Taro.FC> {
                   display: "inline-block",
                   verticalAlign: "super",
                   marginRight: "5px",
+                  color: "#999999",
                 }}
               >
                 进入商城
               </Text>
-              <Image className="img" src={rightArrow}></Image>
+              <Image
+                className="img"
+                // style={{ width: "200px", height: "200px" }}
+                src={rightArrow}
+              ></Image>
             </View>
           </View>
           <View className="commodity-list-content">
             {commodityList.map((item, index) => {
               return (
-                <View className="item">
-                  <View className="item-img-container">
-                    <View
-                      onClick={goMarketDetail}
-                      className="item-img"
-                      style={`background-image: url(${item.img});background-position: center;background-size: contain;`}
-                    ></View>
-                  </View>
-                  <View className="item-title">
-                    [{item.classic}]&nbsp;{item.title}
-                  </View>
-                </View>
+                <>
+                  {item.isChoiceness && (
+                    <View className="item">
+                      <View className="item-img-container">
+                        <View
+                          onClick={() => goMarketDetail(item)}
+                          className="item-img"
+                          // style={`background-image: url(${item.img});background-position: center;background-size: contain;`}
+                          style={`background-image: url(${
+                            item.imgUrls.split(",")[0]
+                          });background-position: center;background-size: cover;`}
+                        ></View>
+                      </View>
+                      <View className="item-title">
+                        [{item.theme}]&nbsp;{item.name}
+                      </View>
+                    </View>
+                  )}
+                </>
               );
             })}
           </View>

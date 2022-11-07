@@ -11,6 +11,8 @@ import logoImg_white from "../../assets/logo_white.png";
 
 import logiImg_left from "../../assets/left-arrow.png";
 
+import small_logiImg_left from "../../assets/small-left-arrow.png";
+
 import "./index.less";
 
 export default function CustomNavBar(props): ReturnType<Taro.FC> {
@@ -24,6 +26,8 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
     searchText,
     iconTheme,
     extClass,
+    navigateBack = false,
+    isBackTab = false,
     backUrl = null,
     logo = "black", // black white left  right
     fullScreen = false,
@@ -37,6 +41,18 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
   // const [navBarHeight, setNavBarHeight] = useState<any>();
 
   const goHome = () => {
+    if (navigateBack) {
+      Taro.navigateBack();
+      return;
+    }
+
+    if (isBackTab) {
+      Taro.switchTab({
+        url: backUrl,
+      });
+      return;
+    }
+
     if (backUrl) {
       Taro.navigateTo({
         url: backUrl,
@@ -77,7 +93,7 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
         className="customNavPage"
         style={`z-index:99; backgroundColor: ${backgroundColor};height:${navBarHeight}px;position:${
           fullScreen ? "absolute" : "relative"
-        };left:10px;top:${navBarHeight + 1}px`}
+        };left:10px;top:${navBarHeight - 20}px`}
       >
         {logo === "black" && (
           <Image
@@ -97,9 +113,9 @@ export default function CustomNavBar(props): ReturnType<Taro.FC> {
 
         {logo === "left" && (
           <Image
-            src={logiImg_left}
+            src={true ? small_logiImg_left : logoImg_black}
             onClick={goHome}
-            className="imageLogo"
+            className="imageLogo_small"
           ></Image>
         )}
 

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-quotes */
-import { Component, useRef, useState } from "react";
+import { Component, useRef, useState, useEffect } from "react";
 import Taro, { useRouter } from "@tarojs/taro";
 import { AtList, AtListItem, AtIcon, AtInputNumber, AtCheckbox } from "taro-ui";
 import {
@@ -18,6 +18,9 @@ import { StoreStatus, OrderStatus } from "../../store/types/index";
 
 import CustomNavBar from "../../components/customNavBar/index";
 
+import TaroRequest, { baseUrl } from "../../utils/service/api";
+import { api_exhibition, api_queryShopCart } from "../../utils/service/url";
+
 import "./index.scss";
 
 export default function Login(): ReturnType<Taro.FC> {
@@ -34,10 +37,14 @@ export default function Login(): ReturnType<Taro.FC> {
   ]);
 
   const [list, setlist] = useState([
-    { id: 1, img: "http://106.12.154.161/images/mo-design/merket-detail.png" },
-    { id: 2, img: "http://106.12.154.161/images/mo-design/merket-detail.png" },
-    { id: 1, img: "http://106.12.154.161/images/mo-design/merket-detail.png" },
-    { id: 2, img: "http://106.12.154.161/images/mo-design/merket-detail.png" },
+    {
+      id: 1,
+      imgUrls: "http://106.12.154.161/images/mo-design/merket-detail.png",
+      theme: "",
+      name: "",
+      price: "1",
+      num: "1",
+    },
   ]);
 
   const [shopDetail, setshopDetail] = useState([
@@ -48,6 +55,8 @@ export default function Login(): ReturnType<Taro.FC> {
       ],
     },
   ]);
+
+  const [urlData, setUrlData] = useState(null);
 
   // const shopInfo=
 
@@ -79,13 +88,54 @@ export default function Login(): ReturnType<Taro.FC> {
     console.log("handleChange", e);
   };
 
+  useEffect(() => {
+    TaroRequest.get(
+      api_queryShopCart + "/" + Taro.getStorageSync("userId")
+    ).then((res) => {
+      console.log(res, res.data.data, "333333");
+
+      setlist(res.data.data);
+
+      Taro.hideLoading();
+    });
+  }, []);
+
+  useEffect(() => {
+    Taro.showLoading({
+      title: "加载中",
+    });
+    const pages = Taro.getCurrentPages();
+    const current = pages[pages.length - 1];
+    const eventChannel = current.getOpenerEventChannel();
+
+    // 触发A页面的 events 中的 someEvent
+    eventChannel.emit("someEvent", { queNumber: "lsk--->" });
+
+    // 接收 A页面的 events 中的 acceptDataFromOpenerPage 传递的数据
+    eventChannel.on("acceptDataFromOpenerPage", (res) => {
+      console.log("page_test", res);
+      setUrlData(res.data);
+
+      if (!res) {
+        Taro.showToast({ title: "error", icon: "error" });
+        return;
+      }
+      setTimeout(function () {
+        Taro.hideLoading();
+      }, 100);
+    });
+  }, []);
+
   return (
     <View className="index">
       <CustomNavBar
         title="购物袋"
         logo="left"
         fullScreen={false}
-        backUrl="/view/market/index"
+        // !
+        navigateBack={true}
+        isBackTab={urlData ? true : false}
+        backUrl={urlData ? urlData : "/view/market/index"}
       ></CustomNavBar>
       {/* 物品列表 */}
       <View className="shop-list" style={{ marginTop: "65px" }}>
@@ -98,13 +148,18 @@ export default function Login(): ReturnType<Taro.FC> {
                   selectedList={["list1"]}
                   onChange={handleChange}
                 />
-                <Image className="item-img" src={item.img}></Image>
+                <Image className="item-img" src={item.imgUrls}></Image>
               </View>
               <View className="item-content">
-                <View className="action-title">[百年无极]藤条香氛</View>
-                <View className="action-have">有货</View>
+                <View className="action-title">
+                  [{item.theme}]{item.name}
+                </View>
+                <View className="action-have">
+                  {/* {Number(item.num) > stock ? "有货" : "无货"} */}
+                  有货
+                </View>
                 <View className="action">
-                  <View className="action-price">¥ 398</View>
+                  <View className="action-price">¥ {item.price}</View>
                   <AtInputNumber
                     customStyle={{ color: "red" }}
                     type="number"
@@ -112,7 +167,7 @@ export default function Login(): ReturnType<Taro.FC> {
                     max={10}
                     step={1}
                     size="normal"
-                    value={shopNumber}
+                    value={item.num || 1}
                     onChange={shopNumberChange}
                   />
                 </View>

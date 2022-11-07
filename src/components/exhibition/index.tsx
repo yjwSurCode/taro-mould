@@ -1,6 +1,11 @@
 /* eslint-disable jsx-quotes */
 import { Component, useRef, useState, useEffect } from "react";
-import Taro, { useRouter, usePageScroll, useReachBottom } from "@tarojs/taro";
+import Taro, {
+  useRouter,
+  useDidShow,
+  usePageScroll,
+  useReachBottom,
+} from "@tarojs/taro";
 import { useDispatch, useSelector } from "react-redux";
 import {
   View,
@@ -20,10 +25,10 @@ import { AtCurtain, AtButton } from "taro-ui";
 import topArrow from "../../assets/topArrow.png";
 import finishEx from "../../assets/exhibtion-finish.png";
 
-import leftArrow from "../../assets/exli/Slice 44@2x.png";
-import leftArrow_s from "../../assets/exli/Slice 45@2x.png";
-import rightArrow from "../../assets/exli/Slice 8@2x.png";
-import rightArrow_s from "../../assets/exli/Slice 9@2x.png";
+import leftArrow from "../../assets/exli/leftArrow.png";
+import leftArrow_s from "../../assets/exli/leftArrows.png";
+import rightArrow from "../../assets/exli/rightArrow.png";
+import rightArrow_s from "../../assets/exli/rightArrows.png";
 
 import "./index.scss";
 
@@ -33,39 +38,33 @@ export default function Exhibition(): ReturnType<Taro.FC> {
   const [pageHeight, setheightPage] = useState<number>(0);
   const [pageWidth, setpageWidth] = useState<number>(0);
   const [finish, setfinish] = useState<boolean>(false);
-
-  //预先加载
-  const [contentList, setContentList] = useState([
+  const [animationExport, setanimationExport] = useState<any>();
+  const [exData, setExData] = useState<
+    Array<{ maxImg: string; introduce: string }> | []
+  >([
     {
-      img: "http://106.12.154.161/images/mo-design/all1.png",
-      disc: "我拥有自然、艺术和诗歌，我还有什么不满足呢？--梵·高",
+      maxImg: "http://106.12.154.161/images/mo-design/all1.png",
+      introduce: "12312",
     },
     {
-      img: "http://106.12.154.161/images/mo-design/all2.png",
-      disc: "《R》上一根折叠的线条，划过大红的圆，构成点、线、面的联系，他致力于通过抽象形式引发直觉感受",
-    },
-    {
-      img: "http://106.12.154.161/images/mo-design/all3.png",
-      disc: "第二次世界大战期间，许多欧洲艺术家为躲避战乱纷纷前往美国，西方艺术的中心由巴黎移至纽约，为新大陆带去了立体主义、达达主义、超现实主义；美国本土艺术家在此基础上发展出抽象表现主义、波普艺术等新的艺术理念与形式，又反哺旧大陆。",
+      maxImg: "http://106.12.154.161/images/mo-design/all2.png",
+      introduce: "12312",
     },
   ]);
 
-  let animation1 = Taro.createAnimation({
-    // transformOrigin: "50% 50%",
-    duration: 1000,
-    timingFunction: "ease",
-    delay: 0,
-  });
+  const [isGO, setisGO] = useState<boolean>(false);
 
-  let animation2 = Taro.createAnimation({
-    // transformOrigin: "50% 50%",
+  const createAnimation = Taro.createAnimation({
+    transformOrigin: "50% 50%",
     duration: 1000,
     timingFunction: "ease",
     delay: 0,
   });
 
   const switchImg = (v: string) => {
-    console.log("111111", v);
+    // createAnimation.opacity
+
+    // setanimationExport(createAnimation.export());
 
     if (v === "pre") {
       if (currentImg === 0) {
@@ -75,7 +74,7 @@ export default function Exhibition(): ReturnType<Taro.FC> {
     }
 
     if (v === "next") {
-      if (currentImg === contentList.length - 1) {
+      if (currentImg === exData.length - 1) {
         return;
       }
       setCurrentImg(currentImg + 1);
@@ -84,6 +83,7 @@ export default function Exhibition(): ReturnType<Taro.FC> {
 
   const touchstartFn = (v) => {
     console.log(v.touches, "11111");
+    setisGO(false);
     startXY.current = {
       startClientX: v.touches[0].clientX,
       startClientY: v.touches[0].clientY,
@@ -93,17 +93,24 @@ export default function Exhibition(): ReturnType<Taro.FC> {
   const touchmoveFn = (v) => {
     console.log(
       v.touches,
-      "22222",
+      "22222222222222222222",
       startXY.current.startClientY - v.touches[0].clientY
     );
+
     //简易判断上滑
-    if (Math.abs(startXY.current.startClientY - v.touches[0].clientY) > 70) {
-      console.log("判断成功上滑");
+    if (
+      Math.abs(startXY.current.startClientY - v.touches[0].clientY) > 70 &&
+      isGO == false
+    ) {
+      console.log("判断成功上滑"); //多次触发
+      setisGO(true);
       Taro.navigateTo({
         url: "/view/market/index",
       });
       return;
     }
+
+    return;
   };
 
   const touchendFn = (v) => {
@@ -114,7 +121,57 @@ export default function Exhibition(): ReturnType<Taro.FC> {
     console.log(v.touches, "4455");
   };
 
+  useDidShow(() => {
+    console.log("aaaaaaaaaa");
+    console.log("获取到数据", Taro.getCurrentInstance().preloadData); // 获取到数据
+    const obj: any = Taro.getCurrentInstance().preloadData;
+    if (obj == undefined) {
+      Taro.showLoading();
+      // Taro.showLoading({
+      //   title: "",
+      // });
+      return;
+    }
+    setExData(obj);
+  });
+
   useEffect(() => {
+    Taro.getSystemInfo({
+      success: function (res) {
+        console.log(res.windowHeight, "7777");
+        setheightPage(res.windowHeight);
+        setpageWidth(res.windowWidth);
+      },
+    });
+    // Promise.all(
+    //   [
+    //     actInfo.template?.cardBackImg || actInfo.cardList[0].cardBackImg,
+    //     count1,
+    //     count2,
+    //     count3,
+    //     gameContentBg,
+    //     gamePopupBg,
+    //     step1,
+    //     step2,
+    //     step3,
+    //     step4,
+    //     stageTip,
+    //   ].map((url) =>
+    //     loadImage(url).catch((err) => {
+    //       logUtils.error(`load image ${url} failed: ${err}`);
+    //     })
+    //   )
+    // );
+
+    // var img = new Image(); //创建一个Image对象，实现图片的预下载
+    // img.onload = function () {
+    //   img.onload = null;
+    //   callback(img);
+    // };
+    // img.src = url;
+
+    return;
+
     Taro.showLoading({
       title: "加载中",
     });
@@ -128,6 +185,8 @@ export default function Exhibition(): ReturnType<Taro.FC> {
     // 接收 A页面的 events 中的 acceptDataFromOpenerPage 传递的数据
     eventChannel.on("acceptDataFromOpenerPage", (res) => {
       console.log("page_test", res);
+      setExData(res.data);
+
       if (!res) {
         Taro.showToast({ title: "error", icon: "error" });
         return;
@@ -138,27 +197,6 @@ export default function Exhibition(): ReturnType<Taro.FC> {
     });
   }, []);
 
-  useEffect(() => {
-    Taro.getSystemInfo({
-      success: function (res) {
-        console.log(res.windowHeight, "7777");
-        setheightPage(res.windowHeight);
-        setpageWidth(res.windowWidth);
-      },
-    });
-    // animation.translate(150, 0).rotate(180).step();
-    // animation.opacity(0).scale(0).step();
-    // const info = Taro.getSystemInfoAsync().then((res) => res.windowHeight);
-    // console.log("88888", info);
-    // animation2.translateX(300).step();
-    // animation2.opacity(1).step();
-    // setAnimationData2(animation2.export());
-    // else {
-    //   animation2.opacity(0);
-    //   setAnimationData2(animation2.export());
-    // }
-  }, [currentImg]);
-
   usePageScroll((res) => {
     console.log(res.scrollTop);
   });
@@ -168,12 +206,11 @@ export default function Exhibition(): ReturnType<Taro.FC> {
   });
 
   return (
-    //style={`height:${pageHeight}px;`}
     <View
       className="exhibition-page"
       style={`height:${pageHeight}px;backgroundColor: #ffffff`}
     >
-      <CustomNavBar fullScreen={true}></CustomNavBar>
+      <CustomNavBar fullScreen={true} logo="white"></CustomNavBar>
       <AtCurtain isOpened={finish} onClose={AtCurtainonClose}>
         <Image className="finish-img" src={finishEx}></Image>
       </AtCurtain>
@@ -182,22 +219,42 @@ export default function Exhibition(): ReturnType<Taro.FC> {
         className="image-box"
         style={`height:${pageHeight}px;width:${pageWidth}px;`}
       >
-        {contentList.map((item, index) => {
+        {exData.map((item, index) => {
           return (
-            <View>
+            <View
+              style={{
+                backgroundImage: `url(${item.maxImg})`,
+                backgroundPosition: "center",
+              }}
+              className="exhibition-page-img-box"
+            >
               {currentImg === index && (
                 <View>
-                  <View
-                    style={`height:${pageHeight}px;width:${pageWidth}px; background-image: url(${item.img});background-position: center;`}
-                    // animation={animationData1}
+                  {/* display:${
+                      currentImg === index ? "block" : "none"
+                    }; */}
+                  {/* <View
+                    style={`height:${pageHeight}px;width:${pageWidth}px; background-image: url(${item.maxImg});background-position: center;`}
                     className="exhibition-page-img"
-                  ></View>
-                  <View className="exhibition-disc">{item.disc}</View>
+                    // animation={animationExport}
+                  ></View> */}
+                  <Image
+                    src={item.maxImg}
+                    style={`height:${pageHeight}px;width:${pageWidth}px;background-position: center;`}
+                    className="exhibition-page-img"
+                  ></Image>
+                  <View className="exhibition-disc">{item.introduce}</View>
                 </View>
               )}
             </View>
           );
         })}
+      </View>
+      {/* 页码 */}
+      <View className="action-page">
+        <View className="action-left">{currentImg + 1}</View>
+        <View className="action-flag">/</View>
+        <View className="action-right">{exData.length}</View>
       </View>
       <View className="action-container">
         <View className="action-bnt-box">
@@ -209,9 +266,7 @@ export default function Exhibition(): ReturnType<Taro.FC> {
           <Image
             className="action-btn-box-img"
             onClick={() => switchImg("next")}
-            src={
-              currentImg === contentList.length - 1 ? rightArrow : rightArrow_s
-            }
+            src={currentImg === exData.length - 1 ? rightArrow : rightArrow_s}
           ></Image>
         </View>
         <View

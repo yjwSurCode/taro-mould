@@ -3,6 +3,22 @@
   overflow-x: hidden;
 }
 
+.at-search-bar {
+  margin: 0px 25px;
+}
+.at-search-bar__input-cnt {
+  padding: 10px 0px;
+}
+.at-search-bar__input {
+  top: 10px;
+}
+.at-search-bar__action {
+  background-color: black;
+}
+.at-search-bar::after {
+  border-bottom: none;
+}
+
 //指示器
 .Indictor {
   text-align: center;
@@ -29,18 +45,23 @@
 .swiper-container {
   height: 400px;
   min-height: 300px;
-  margin: 50px;
+  margin: 30px 50px 50px 50px;
   // margin-bottom: 0px;
 }
 
 .commodity-list-box {
   .commodity-list-title {
     display: flex;
-    margin: 0px 50px 20px 50px;
+    align-items: center;
+    margin: 0px 40px 20px 50px;
 
     .right {
       flex: 1;
       text-align: right;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .text {
@@ -51,8 +72,8 @@
     }
 
     .img {
-      width: 50px;
-      height: 50px;
+      width: 80px;
+      height: 80px;
     }
   }
 }
@@ -103,7 +124,8 @@
 
   // 下面两同时设置 border-radius
   .item-img-container {
-    border-radius: 30px;
+    overflow: hidden;
+    border-radius: 50px;
     box-shadow: 5px 3px 13px rgb(216, 216, 216);
   }
   .item-img {
@@ -133,7 +155,7 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    padding: 10px 15px;
+    padding: 3px 15px;
     font-size: 25px;
 
     font-family: "PingFang SC";
@@ -152,4 +174,5 @@
 .bar-image {
   width: 100%;
   height: 100%;
+  border-radius: 50px;
 }

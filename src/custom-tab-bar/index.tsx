@@ -47,19 +47,19 @@ class Tabbar extends Component {
         {
           text: "首页",
           pagePath: "/pages/home/index",
-          iconPath: "../assets/Slice 16@3x.png",
+          iconPath: "../assets/tab-home.png",
           selectedIconPath: "../assets/select-home.png",
         },
         {
           text: "展示",
           pagePath: "/pages/exhibition-list/index",
-          iconPath: "../assets/Slice 17@3x.png",
+          iconPath: "../assets/tab-exhibition.png",
           selectedIconPath: "../assets/select-exhibition.png",
         },
         {
           text: "我的",
           pagePath: "/pages/my/index",
-          iconPath: "../assets/Slice 18@3x.png",
+          iconPath: "../assets/tab-my.png",
           selectedIconPath: "../assets/select-my.png",
         },
       ],

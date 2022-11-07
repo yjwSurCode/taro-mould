@@ -1,10 +1,11 @@
 .tab-bar {
   background-color: black;
   display: flex;
-  margin: 10px;
+  margin: 10px 50px;
   border-radius: 50px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   z-index: 999;
+  box-shadow: 1px 1px 8px 3px #1e1b1b41;
 
   animation: fadeInUp; //jackInTheBox; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
   animation-duration: 0.01s; /* don't forget to set a duration! */

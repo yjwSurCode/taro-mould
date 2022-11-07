@@ -3,13 +3,13 @@
   font-style: normal;
   font-weight: bold;
   font-size: 40px;
-  padding-top: 50px;
+  padding: 100px 40px 10px 40px;
 }
 
 .filter-box {
   display: flex;
   font-size: 30px;
-  padding: 20px 50px 30px 30px;
+  padding: 0px 50px 30px 30px;
 
   & view {
     height: 55px;
@@ -101,6 +101,23 @@
     font-style: normal;
     font-weight: bold;
     padding: 0;
-    margin: 20px 0px;
+    margin: 10px 0px 0px 0px;
+  }
+
+  .item-spec {
+    /* 中英数/regular/12 */
+    font-family: "HarmonyOS Sans SC";
+    font-style: normal;
+    padding: 0;
+    margin-bottom: 0px;
+  }
+
+  .item-num {
+    font-family: "PingFang SC";
+    font-style: normal;
+    font-size: 20px;
+    color: #bebebe;
+    padding: 0;
+    margin-bottom: 20px;
   }
 }

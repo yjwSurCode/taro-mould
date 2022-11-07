@@ -43,24 +43,9 @@ export default function Home(): ReturnType<Taro.FC> {
   const [searchValue, setSearchValue] = useState("");
   const [exList, setExList] = useState([
     {
-      title: "百年无极",
-      disc: "The Infinite Univeris of WUJI",
-      img: "http://106.12.154.161/images/mo-design/home-ex.png",
-    },
-    {
-      title: "“叙”写传奇",
-      disc: "An Exhibition of Antiquities Form Syrie",
-      img: "http://106.12.154.161/images/mo-design/ex-list2.png",
-    },
-    {
-      title: "百年无极",
-      disc: "The Infinite Univeris of WUJI",
-      img: "http://106.12.154.161/images/mo-design/home-ex.png",
-    },
-    {
-      title: "“叙”写传奇",
-      disc: "An Exhibition of Antiquities Form Syrie",
-      img: "http://106.12.154.161/images/mo-design/ex-list2.png",
+      theme: "",
+      themeEnglish: "",
+      minImg: "http://106.12.154.161/images/mo-design/home-ex.png",
     },
   ]);
 
@@ -72,6 +57,61 @@ export default function Home(): ReturnType<Taro.FC> {
   const onChange = () => {};
 
   const page = useMemo(() => Taro.getCurrentInstance().page, []);
+
+  const goExhibitionPage = () => {
+    Taro.preload(exList);
+
+    Taro.navigateTo({
+      url: "/components/exhibition/index",
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        acceptDataFromOpenedPage: function (data) {
+          console.log(data);
+        },
+        someEvent: function (data) {
+          console.log(data);
+        },
+      },
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit("acceptDataFromOpenerPage", {
+          data: exList,
+        });
+      },
+    });
+  };
+
+  const initExhibition = () => {
+    //! 请求EX数据
+    Taro.request({
+      url: baseUrl + api_exhibition,
+      method: "POST",
+      data: { page: 1, limit: 1000 },
+    }).then((res) => {
+      console.log(res.data.data.records, "api_exhibition");
+      const imgList: any = [];
+      res.data.data.records.forEach((item, index) => {
+        const minImg = item.imgUrl.split(",")[0];
+        const maxImg = item.imgUrl.split(",")[1];
+        const obj = {
+          theme: item.theme,
+          themeEnglish: item.themeEnglish,
+          introduce: item.introduce,
+          status: item.status,
+          isCarousel: item.isCarousel,
+          createTime: item.createTime,
+          updateTime: item.updateTime,
+          minImg: minImg,
+          maxImg: maxImg,
+        };
+        imgList.push(obj);
+      });
+
+      console.log(imgList, "imgList");
+      setExList(imgList);
+      Taro.hideLoading();
+    });
+  };
 
   useDidShow(() => {
     //获取自定义 TabBar 对应的 React 或 Vue 组件实例
@@ -89,40 +129,7 @@ export default function Home(): ReturnType<Taro.FC> {
       mask: true,
     });
 
-    Taro.request({
-      url: baseUrl + api_exhibition,
-      method: "GET",
-      data: { page: "res.code", limit: "123" },
-    }).then((loginResult) => {
-      console.log(
-        loginResult,
-        "2222222222222222-loginResult",
-        loginResult.data.data.openid
-      );
-      if (loginResult.statusCode != 200) {
-        Taro.showToast({
-          title: "登录失败",
-          icon: "error",
-          duration: 2000,
-        });
-        return;
-      }
-
-      //! 存opneid
-      Taro.setStorageSync("openid", loginResult.data.data.openid);
-
-      return loginResult.data.data.openid;
-
-      // return Taro.getSetting().then((getSetting) => {
-      //   if (getSetting.authSetting["scope.userInfo"]) {
-      //     return getUserInfo(loginResult.data[0].data.openid);
-      //   }
-      // }); //
-    });
-
-    setTimeout(() => {
-      Taro.hideLoading();
-    }, 1000);
+    initExhibition();
   }, []);
 
   useDidShow(() => {
@@ -138,10 +145,7 @@ export default function Home(): ReturnType<Taro.FC> {
     <View className="exhibition-list-page">
       <CustomNavBar></CustomNavBar>
       {/* 搜索 */}
-      <View
-        style={{ margin: "20px", marginTop: "50px" }}
-        className="exhibition-search"
-      >
+      <View className="exhibition-search">
         <AtSearchBar
           value={searchValue}
           onChange={onChange}
@@ -160,9 +164,13 @@ export default function Home(): ReturnType<Taro.FC> {
           {exList.map((item, index) => {
             return (
               <View className="list-item">
-                <Image src={item.img} className="list-item-img"></Image>
-                <View className="list-item-title">{item.title}</View>
-                <View className="list-item-disc">{item.disc}</View>
+                <Image
+                  src={item.minImg}
+                  className="list-item-img"
+                  onClick={goExhibitionPage}
+                ></Image>
+                <View className="list-item-title">{item.theme}</View>
+                <View className="list-item-disc">{item.themeEnglish}</View>
               </View>
             );
           })}

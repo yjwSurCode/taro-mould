@@ -1,9 +1,24 @@
+.exhibition-page-img-box {
+  animation: fadeIn; // flipInY; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1.5s; /* don't forget to set a duration! */
+}
 .exhibition-page-img {
   height: 100%;
   width: 100%;
+  z-index: 99;
+  background-color: rgb(20, 20, 20);
 
-  animation: jackInTheBox; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1s; /* don't forget to set a duration! */
+  // -webkit-perspective: 1000;
+  // -webkit-transform-style: preserve-3d; ///设置内嵌的元素在 3D 空间如何呈现：保留 3D/
+  // -webkit-backface-visibility: hidden; ///(设置进行转换的元素的背面在面对用户时是否可见：隐藏)/
+  // //开启硬件加速
+  // -webkit-transform: translate3d(0, 0, 0);
+  // -moz-transform: translate3d(0, 0, 0);
+  // -ms-transform: translate3d(0, 0, 0);
+  // transform: translate3d(0, 0, 0);
+
+  animation: fadeIn; // flipInY; // flip; //rubberBand; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 1.5s; /* don't forget to set a duration! */
 }
 
 .image-box {
@@ -23,29 +38,33 @@
   margin: 25px;
   line-height: 180%;
 
-  animation: bounceInLeft; //backInLeft; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 3s; /* don't forget to set a duration! */
+  animation: fadeInTopLeft; //backInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
 }
 
 .action-container {
-  animation: bounceInDown; //fadeInLeft; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 1.5s; /* don't forget to set a duration! */
+  animation: fadeInRight; // bounceInDown; //fadeInLeft; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
 
   position: absolute;
   bottom: 30px;
 
   .action-bnt-box {
-    &-img {
-      width: 50px;
-      height: 50px;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    .action-btn-box-img {
+      display: block;
+      width: 100px;
+      height: 100px;
     }
   }
 
   .action-swiper {
     position: relative;
-    bottom: 30px;
+    bottom: 136px;
     left: 130%;
-    text-align: center;
+    text-align: left;
     color: white;
 
     &-img {
@@ -53,6 +72,32 @@
       height: 50px;
     }
   }
+}
+.action-page {
+  position: absolute;
+  top: 200px;
+  right: 40px;
+  display: flex;
+  color: white;
+  align-items: baseline;
+
+  /* 中文/medium/14 */
+
+  font-family: "PingFang SC";
+  font-style: normal;
+}
+.action-left {
+  font-size: 60px;
+  font-weight: 200;
+  margin-right: 10px;
+}
+.action-right {
+  font-size: 30px;
+  font-weight: 100;
+}
+.action-flag {
+  font-size: 70px;
+  font-weight: 150;
 }
 
 .action-btn-box-img {

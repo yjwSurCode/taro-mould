@@ -1,10 +1,27 @@
 .exhibition-list-page {
   min-height: 100vh;
 }
+//
+.at-search-bar__input-cnt {
+  padding: 10px 0px;
+}
+.at-search-bar__input {
+  top: 10px;
+}
 
 .exhibition-search {
-  margin: 50px;
+  margin: 100px 40px 10px 40px;
 }
+.at-search-bar__action {
+  background-color: black;
+}
+.at-search-bar {
+  padding: 10px 0px;
+}
+.at-search-bar::after {
+  border-bottom: none;
+}
+
 .exhibition-list {
   margin: 0px 50px;
 
@@ -17,35 +34,38 @@
 
   .list-item {
     margin-top: 50px;
-    text-align: center;
     width: 100%;
+
+    .list-item-img {
+      height: 300px;
+      width: 100%;
+    }
+
+    .list-item-title {
+      font-size: 32px;
+      font-family: "PingFang SC";
+      font-style: normal;
+      font-weight: 00;
+    }
+
+    .list-item-disc {
+      /* 中文/regular/14 */
+      font-family: "PingFang SC";
+      //!斜体
+      // font-style: italic;
+      font-weight: 400;
+      font-size: 28px;
+      line-height: 40px;
+      /* identical to box height, or 143% */
+
+      color: #000000;
+      opacity: 0.3;
+    }
   }
+}
 
-  .list-item-img {
-    height: 300px;
-    width: 100%;
-  }
-
-  .list-item-title {
-    font-size: 32px;
-    font-family: "PingFang SC";
-    font-style: normal;
-    font-weight: 00;
-  }
-
-  .list-item-disc {
-    /* 中文/regular/14 */
-
-    font-family: "PingFang SC";
-    font-style: italic;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 40px;
-    /* identical to box height, or 143% */
-
-    color: #000000;
-    opacity: 0.3;
-  }
+.exhibition-list :nth-child(2) {
+  margin-top: 20px;
 }
 
 .at-search-bar__placeholder-wrap {

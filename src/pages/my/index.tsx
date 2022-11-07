@@ -25,12 +25,12 @@ import {
 
 import CustomNavBar from "../../components/customNavBar/index";
 
-import logoImg from "../../assets/logo.png";
+import logoImg from "../../assets/my/my-logo.png";
 
-import shop1 from "../../assets/my/Slice 21@2x.png";
-import shop2 from "../../assets/my/Slice 22@2x.png";
-import shop3 from "../../assets/my/Slice 23@2x.png";
-import shop4 from "../../assets/my/Slice 24@2x.png";
+import shop1 from "../../assets/my/fukuan.png";
+import shop2 from "../../assets/my/fahuo.png";
+import shop3 from "../../assets/my/shouhuo.png";
+import shop4 from "../../assets/my/pingjia.png";
 
 import rightArrow from "../../assets/right-arrow-noBorder.png";
 
@@ -124,7 +124,9 @@ class MyPage extends Component {
       },
       success: function (res) {
         // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit("acceptDataFromOpenerPage", { data: "test" });
+        res.eventChannel.emit("acceptDataFromOpenerPage", {
+          data: "/pages/my/index",
+        });
       },
     });
   };
@@ -135,9 +137,10 @@ class MyPage extends Component {
       mask: true,
     });
 
+    // 暂时性
     setTimeout(() => {
       Taro.hideLoading();
-    }, 1000);
+    }, 0);
 
     const val = Taro.getStorageSync("userId");
     if (!val) {
@@ -217,36 +220,20 @@ class MyPage extends Component {
                 customStyle={{ fontWeight: "bold", height: "20px" }}
               />
               <View className="trajectory">
-                <View className="trajectory-item">
-                  <Image
-                    onClick={this.goShopCart}
-                    className="trajectory-img"
-                    src={shop1}
-                  ></Image>
+                <View className="trajectory-item" onClick={this.goShopCart}>
+                  <Image className="trajectory-img" src={shop1}></Image>
                   <View>待付款</View>
                 </View>
-                <View className="trajectory-item">
-                  <Image
-                    onClick={this.goShopCart}
-                    className="trajectory-img"
-                    src={shop2}
-                  ></Image>
+                <View className="trajectory-item" onClick={this.goShopCart}>
+                  <Image className="trajectory-img" src={shop2}></Image>
                   <View>待发货</View>
                 </View>
-                <View className="trajectory-item">
-                  <Image
-                    onClick={this.goShopCart}
-                    className="trajectory-img"
-                    src={shop3}
-                  ></Image>
+                <View className="trajectory-item" onClick={this.goShopCart}>
+                  <Image className="trajectory-img" src={shop3}></Image>
                   <View>待收货</View>
                 </View>
-                <View className="trajectory-item">
-                  <Image
-                    onClick={this.goShopCart}
-                    className="trajectory-img"
-                    src={shop4}
-                  ></Image>
+                <View className="trajectory-item" onClick={this.goShopCart}>
+                  <Image className="trajectory-img" src={shop4}></Image>
                   <View>待评价</View>
                 </View>
               </View>

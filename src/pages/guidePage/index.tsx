@@ -11,6 +11,7 @@ import guideImg from "../../assets/动图.gif";
 
 import logo1 from "../../assets/login/logo1.png";
 import logo2 from "../../assets/login/logo2.png";
+import logo3 from "../../assets/login/logo3.png";
 
 import "./index.scss";
 
@@ -49,9 +50,9 @@ export default function Login(): ReturnType<Taro.FC> {
     <View className="guideImgPage">
       {/* <CustomNavBar></CustomNavBar> */}
       {/* <Image src={guideImg} /> */}
-      <View style={{ display: "flex", alignItems: "center" }}>
-        <Image className="img" src={logo1} />
-        <Image className="img" src={logo2} />
+      <View style={{ lineHeight: "100%" }}>
+        <Image className="img" src={logo3} />
+        <View className="text">设计商店</View>
       </View>
     </View>
   );
