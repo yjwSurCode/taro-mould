@@ -129,6 +129,7 @@ npm install -g sass-migrator
 onPullDownRefresh() {
 console.log("onPullDownRefresh");
 }
+
 // 监听上拉触底
 onReachBottom() {
 console.log("onReachBottom");

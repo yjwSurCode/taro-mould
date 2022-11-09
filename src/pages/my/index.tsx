@@ -222,19 +222,19 @@ class MyPage extends Component {
               <View className="trajectory">
                 <View className="trajectory-item" onClick={this.goShopCart}>
                   <Image className="trajectory-img" src={shop1}></Image>
-                  <View>待付款</View>
+                  <View className="trajectory-text">待付款</View>
                 </View>
                 <View className="trajectory-item" onClick={this.goShopCart}>
                   <Image className="trajectory-img" src={shop2}></Image>
-                  <View>待发货</View>
+                  <View className="trajectory-text">待发货</View>
                 </View>
                 <View className="trajectory-item" onClick={this.goShopCart}>
                   <Image className="trajectory-img" src={shop3}></Image>
-                  <View>待收货</View>
+                  <View className="trajectory-text">待收货</View>
                 </View>
                 <View className="trajectory-item" onClick={this.goShopCart}>
                   <Image className="trajectory-img" src={shop4}></Image>
-                  <View>待评价</View>
+                  <View className="trajectory-text">待评价</View>
                 </View>
               </View>
             </View>
